@@ -1,0 +1,69 @@
+* {
+    box-sizing: border-box;
+}
+*:after, *:before {
+    box-sizing: border-box;
+}
+*:after, *:before {
+    box-sizing: border-box;
+}
+body
+{
+  background-color: White;
+  color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.table th, .table td {
+    border: 1px solid #333333;
+    padding: 4px 6px;
+}
+.btn {
+    display: none;
+}
+.control-label {
+    font-weight: bold;
+}
+.form-group {
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+.form-group .control-label {
+    float: left;
+    width: 40%;
+}
+.form-group > div {
+    float: left;
+    width: 60%;
+}
+.form-control-static{
+    margin: 0;
+}
+h2 {
+    text-align: center;
+}
+h2 .label{
+    display: block;
+}
+h3.panel-title {
+    border-bottom: 1px solid #aaa;
+}
+.text-right {
+    text-align: right;
+}
+.text-center {
+    text-align: center;
+}
+.text-left {
+    text-align: left;
+}
+.text-justify {
+    text-align: justify;
+}
+.table-small {
+    font-size: 10px;
+}

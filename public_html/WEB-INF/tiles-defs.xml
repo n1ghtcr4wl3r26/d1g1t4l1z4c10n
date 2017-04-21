@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+<tiles-definitions>
+    <definition name="aud.classic" path="/pages/layout/ClassicLayout.jsp">
+        <put name="title" value="Correlativo"/>
+        <put name="jscript" value=""/>
+        <put name="header" value="/pages/layout/Header.jsp"/>
+        <put name="content" value="/pages/layout/Blank.jsp"/>
+        <put name="sidebar" value="/pages/layout/Blank.jsp"/>
+        <put name="footer" value="/pages/layout/Footer.jsp"/>
+    </definition>
+    <definition name="aud.home" extends="aud.classic">
+        <put name="sidebar" value="/pages/layout/MenuLayout.jsp"/>
+        <put name="content" value="/pages/layout/Blank.jsp"/>
+        <put name="footer" value="/pages/layout/Footer.jsp"/>
+    </definition>
+    
+    <!-- SOLICITUD -->
+    <definition name="digitalizacion.index" extends="aud.home">
+        <put name="content" value="/pages/digitalizacion/index.jsp"/>
+    </definition>   
+    
+    <definition name="digitalizacion.consulta.filtro" extends="aud.home">
+        <put name="content" value="/pages/digitalizacion/consulta_por_filtro.jsp"/>
+    </definition>
+    
+    <definition name="digitalizacion.consulta.tramite" extends="aud.home">
+        <put name="content" value="/pages/digitalizacion/consulta_por_tramite.jsp"/>
+    </definition>
+    
+    <definition name="digitalizacion.consulta.relaciones" extends="aud.home">
+        <put name="content" value="/pages/digitalizacion/consulta_por_tramite_relaciones.jsp"/>
+    </definition>
+    
+    <definition name="digitalizacion.consulta.grafica" extends="aud.home">
+        <put name="content" value="/pages/digitalizacion/consulta_por_tramite_grafica.jsp"/>
+    </definition>
+    
+    <definition name="demo.user.mod" extends="aud.home">
+        <put name="content" value="/pages/general/UsuarioCambio.jsp"/>
+    </definition>
+    <definition name="demo.log" extends="aud.home">
+        <put name="content" value="/pages/general/log.jsp"/>
+    </definition>
+</tiles-definitions>
+
+
