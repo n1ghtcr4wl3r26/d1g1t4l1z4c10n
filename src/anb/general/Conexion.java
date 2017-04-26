@@ -51,6 +51,10 @@ public class Conexion {
 
     public void close() {
         try {
+            if (cn != null) {
+                cn.close();
+                cn = null;
+            }
             if (rs != null) {
                 rs.close();
                 rs = null;
@@ -58,11 +62,7 @@ public class Conexion {
             if (call != null) {
                 call.close();
                 call = null;
-            }
-            if (cn != null) {
-                cn.close();
-                cn = null;
-            }
+            }            
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -33,7 +33,7 @@ public class DigitalizacionDao extends Conexion {
         List<Aduana> aduanas = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.OBTENER_ADUANAS_ACTIVAS (?)}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.OBTENER_ADUANAS_ACTIVAS (?)}");
             call.registerOutParameter("C_ADUANAS", OracleTypes.CURSOR);
             call.execute();
 
@@ -48,9 +48,9 @@ public class DigitalizacionDao extends Conexion {
                 }
             }
         } finally {
-            if (!esTransaccional()) {
+            //if (!esTransaccional()) {
                 close();
-            }
+            //}
         }
         return aduanas;
     }
@@ -61,7 +61,7 @@ public class DigitalizacionDao extends Conexion {
         List<Tramite> tramites = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.CONSULTA_POR_FILTRO (?,?,? ,?,?,? ,? ,?)}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_FILTRO (?,?,? ,?,?,? ,? ,?)}");
             call.setString("PRM_CODCONSIGNATARIO", digital.getCodconsignatario());
             call.setString("PRM_TIPODOCUMENTO", digital.getTipodocumento());
             call.setString("PRM_EMISOR", digital.getEmisor());
@@ -88,12 +88,12 @@ public class DigitalizacionDao extends Conexion {
                 tramite.setFecha_emi(rs.getString("CNS_FECHA_EMI"));
                 tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));
                 tramite.setEstado(rs.getString("CNS_ESTADO"));
-                tramite.setUsuario(rs.getString("CNS_USUARIO"));
+                tramite.setUsuario(rs.getString(12));
                 tramite.setFechasys(rs.getString("CNS_FECHASYS"));
                 tramites.add(tramite);
             }
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -106,7 +106,7 @@ public class DigitalizacionDao extends Conexion {
         List<Tramite> tramites = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.CONSULTA_POR_FILTRO2 (?,?,? ,?,?,? ,?,? ,?)}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_FILTRO2 (?,?,? ,?,?,? ,?,? ,?)}");
             call.setString("PRM_CODCONSIGNATARIO", digital.getCodconsignatario());
             call.setString("PRM_TIPODOCUMENTO", digital.getTipodocumento());
             call.setString("PRM_EMISOR", digital.getEmisor());
@@ -134,12 +134,12 @@ public class DigitalizacionDao extends Conexion {
                 tramite.setFecha_emi(rs.getString("CNS_FECHA_EMI"));
                 tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));
                 tramite.setEstado(rs.getString("CNS_ESTADO"));
-                tramite.setUsuario(rs.getString("CNS_USUARIO"));
+                tramite.setUsuario(rs.getString(12));
                 tramite.setFechasys(rs.getString("CNS_FECHASYS"));
                 tramites.add(tramite);
             }
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -151,7 +151,7 @@ public class DigitalizacionDao extends Conexion {
         List<Tramite> tramites = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE (?,?,? ,? ,?)}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE (?,?,? ,? ,?)}");
             call.setString("PRM_GESTION", digital.getDuigestion());
             call.setString("PRM_ADUANA", digital.getDuiaduana());
             call.setString("PRM_NUMERO", digital.getDuinumero());
@@ -175,12 +175,12 @@ public class DigitalizacionDao extends Conexion {
                 tramite.setFecha_emi(rs.getString("CNS_FECHA_EMI"));
                 tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));
                 tramite.setEstado(rs.getString("CNS_ESTADO"));
-                tramite.setUsuario(rs.getString("CNS_USUARIO"));
+                tramite.setUsuario(rs.getString(12));
                 tramite.setFechasys(rs.getString("CNS_FECHASYS"));
                 tramites.add(tramite);
             }
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -192,7 +192,7 @@ public class DigitalizacionDao extends Conexion {
         List<Tramite> tramites = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE2 (?,?,? )}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE2 (?,?,? )}");
             call.setString("PRM_TRAMITE", digital.getTramite()+"*"+digital.getTipodocumento());
             call.setString("PRM_TABLA", Log.TABLA_GENERAL);
             call.registerOutParameter("C_RESULTADO", OracleTypes.CURSOR);
@@ -215,12 +215,12 @@ public class DigitalizacionDao extends Conexion {
                 tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));
                 
                 tramite.setEstado(rs.getString("CNS_ESTADO"));
-                tramite.setUsuario(rs.getString("CNS_USUARIO"));
+                tramite.setUsuario(rs.getString(12));
                 tramite.setFechasys(rs.getString("CNS_FECHASYS"));
                 tramites.add(tramite);
             }
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -232,7 +232,7 @@ public class DigitalizacionDao extends Conexion {
         List<Tramite> tramites = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE (?,?,? )}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE (?,?,? )}");
             call.setString("PRM_TRAMITE", digital);
             call.setString("PRM_TABLA", Log.TABLA_GENERAL);
             call.registerOutParameter("C_RESULTADO", OracleTypes.CURSOR);
@@ -255,12 +255,12 @@ public class DigitalizacionDao extends Conexion {
                 tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));
                 
                 tramite.setEstado(rs.getString("CNS_ESTADO"));
-                tramite.setUsuario(rs.getString("CNS_USUARIO"));
+                tramite.setUsuario(rs.getString(12));
                 tramite.setFechasys(rs.getString("CNS_FECHASYS"));
                 tramites.add(tramite);
             }
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -272,7 +272,7 @@ public class DigitalizacionDao extends Conexion {
         List<Tramite> tramites = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE2 (?,?,? )}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE2 (?,?,? )}");
             call.setString("PRM_TRAMITE", digital);
             call.setString("PRM_TABLA", Log.TABLA_GENERAL);
             call.registerOutParameter("C_RESULTADO", OracleTypes.CURSOR);
@@ -295,12 +295,12 @@ public class DigitalizacionDao extends Conexion {
                 tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));
                 
                 tramite.setEstado(rs.getString("CNS_ESTADO"));
-                tramite.setUsuario(rs.getString("CNS_USUARIO"));
+                tramite.setUsuario(rs.getString(12));
                 tramite.setFechasys(rs.getString("CNS_FECHASYS"));
                 tramites.add(tramite);
             }
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -313,7 +313,7 @@ public class DigitalizacionDao extends Conexion {
         
         try {
             open();
-            call = cn.prepareCall("{  ? = call PKG_DIGITALIZACION.RECORRIDO2NIVEL1 (?,?,?,? )}");
+            call = cn.prepareCall("{  ? = call digital.PKG_DIGITALIZACION.RECORRIDO2NIVEL1 (?,?,?,? )}");
             call.registerOutParameter(1, OracleTypes.VARCHAR);
             call.setString(2, digital.getTramite());
             call.setString(3, digital.getTipodocumento());
@@ -328,7 +328,7 @@ public class DigitalizacionDao extends Conexion {
             tramites.add(relaciones);
             
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -346,7 +346,7 @@ public class DigitalizacionDao extends Conexion {
         DigitalizacionForm dig = new DigitalizacionForm();
         try {
             open();
-            call = cn.prepareCall("{  ? = call PKG_DIGITALIZACION.RECORRIDONIVEL1 (?,?,? )}");
+            call = cn.prepareCall("{  ? = call digital.PKG_DIGITALIZACION.RECORRIDONIVEL1 (?,?,? )}");
             call.registerOutParameter(1, OracleTypes.VARCHAR);
             call.setString("PRM_TRAMITE", digital.getTramite());           
             call.registerOutParameter(3, OracleTypes.VARCHAR);
@@ -381,7 +381,7 @@ public class DigitalizacionDao extends Conexion {
             fulltramites.add(tramitesrel);
             fulltramites.add(tramitesnodo);
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return fulltramites;
@@ -395,7 +395,7 @@ public class DigitalizacionDao extends Conexion {
         
         try {
             open();
-            call = cn.prepareCall("{  ? = call PKG_DIGITALIZACION.RECORRIDO (?,?,?,? )}");
+            call = cn.prepareCall("{  ? = call digital.PKG_DIGITALIZACION.RECORRIDO (?,?,?,? )}");
             call.registerOutParameter(1, OracleTypes.VARCHAR);
             call.setString("PRM_TRAMITE", digital.getTramite());
             call.setString("PRM_PADRE", "-");
@@ -412,7 +412,7 @@ public class DigitalizacionDao extends Conexion {
             tramites.add(relaciones);
             
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return tramites;
@@ -433,7 +433,7 @@ public class DigitalizacionDao extends Conexion {
         DigitalizacionForm dig = new DigitalizacionForm();
         try {
             open();
-            call = cn.prepareCall("{  ? = call PKG_DIGITALIZACION.RECORRIDO (?,?,?,? )}");
+            call = cn.prepareCall("{  ? = call digital.PKG_DIGITALIZACION.RECORRIDO (?,?,?,? )}");
             call.registerOutParameter(1, OracleTypes.VARCHAR);
             call.setString("PRM_TRAMITE", digital.getTramite());
             call.setString("PRM_PADRE", "-");
@@ -470,7 +470,7 @@ public class DigitalizacionDao extends Conexion {
             fulltramites.add(tramitesrel);
             fulltramites.add(tramitesnodo);
         } finally {
-            if (!esTransaccional())
+            //if (!esTransaccional())
                 close();
         }
         return fulltramites;
@@ -484,7 +484,7 @@ public class DigitalizacionDao extends Conexion {
         List<TipoDocumento> tipodocumentos = null;
         try {
             open();
-            call = cn.prepareCall("{ call PKG_DIGITALIZACION.OBTENER_TIPO_DOC (?,?,?)}");
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.OBTENER_TIPO_DOC (?,?,?)}");
             call.setString("PRM_LSTOPE", lstope);
             call.setString("PRM_NIT_EMI", nitemi);
             call.registerOutParameter("C_TIPO_DOC", OracleTypes.CURSOR);
@@ -503,9 +503,9 @@ public class DigitalizacionDao extends Conexion {
                 }
             }
         } finally {
-            if (!esTransaccional()) {
+            //if (!esTransaccional()) {
                 close();
-            }
+            //}
         }
         return tipodocumentos;
     }
