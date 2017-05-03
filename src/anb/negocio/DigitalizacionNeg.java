@@ -176,7 +176,7 @@ public class DigitalizacionNeg {
         respuesta.setCodigo(-1);
         if (estaConectadoBd()) {
             try {
-                List<Tramite> result = dao.consultaTramite(digital);
+                List<Tramite> result = dao.buscaTramite(digital);
                 if (result == null || result.size() == 0) {
                     respuesta.setMensaje("No existen registros");
                     respuesta.setCodigo(0);

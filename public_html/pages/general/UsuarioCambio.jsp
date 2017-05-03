@@ -10,18 +10,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">
                 <i class="fa fa-user"></i> <strong>Mi cuenta</strong><small> ${sessionScope.ClaseSession.usuario}</small>
-                <button tabindex="0" 
-                        type="button"
-                        class="info-help pull-right btn btn-link btn-xs" 
-                        role="button" 
-                        data-toggle="popover" 
-                        data-trigger="focus" 
-                        data-placement="left" 
-                        data-html="true" 
-                        title="<strong class='text-primary'><i class='fa fa-info-circle'></i> Cambio de contraseña</strong>" 
-                        data-content="Vea información de su cuenta y cambie la contraseña de su usuario, existe diferencia entre May&uacute;sculas y Min&uacute;sculas para su nueva contraseña.">
-                    Ayuda <i class="fa fa-info-circle"></i>
-                </button>
+               
             </h3>
         </div>
         <div class="panel-body">

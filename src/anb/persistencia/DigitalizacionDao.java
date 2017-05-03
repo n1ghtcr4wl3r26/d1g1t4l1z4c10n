@@ -30,7 +30,7 @@ public class DigitalizacionDao extends Conexion {
 
 
     public List<Aduana> obtenerAduanas() throws SQLException, ClassNotFoundException, NamingException {
-        List<Aduana> aduanas = null;
+        List<Aduana> aduanas = new ArrayList<Aduana>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.OBTENER_ADUANAS_ACTIVAS (?)}");
@@ -58,7 +58,7 @@ public class DigitalizacionDao extends Conexion {
     public List<Tramite> consultaTramitePorFiltro(DigitalizacionForm digital) throws SQLException,
                                                                                      ClassNotFoundException,
                                                                                      NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_FILTRO (?,?,? ,?,?,? ,? ,?)}");
@@ -94,6 +94,7 @@ public class DigitalizacionDao extends Conexion {
             }
         } finally {
             //if (!esTransaccional())
+                //close();
                 close();
         }
         return tramites;
@@ -103,7 +104,7 @@ public class DigitalizacionDao extends Conexion {
     public List<Tramite> consultaTramitePorFiltro2(DigitalizacionForm digital) throws SQLException,
                                                                                      ClassNotFoundException,
                                                                                      NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_FILTRO2 (?,?,? ,?,?,? ,?,? ,?)}");
@@ -148,7 +149,7 @@ public class DigitalizacionDao extends Conexion {
 
     public List<Tramite> consultaTramitePorDui(DigitalizacionForm digital) throws SQLException, ClassNotFoundException,
                                                                                   NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE (?,?,? ,? ,?)}");
@@ -189,7 +190,7 @@ public class DigitalizacionDao extends Conexion {
 
     public List<Tramite> consultaTramite(DigitalizacionForm digital) throws SQLException, ClassNotFoundException,
                                                                             NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE2 (?,?,? )}");
@@ -200,7 +201,6 @@ public class DigitalizacionDao extends Conexion {
 
             rs = (ResultSet)call.getObject("C_RESULTADO");
             if (rs != null)
-                tramites = new ArrayList<Tramite>();
             while (rs.next()) {
                 Tramite tramite = new Tramite();
                 tramite.setCodcons(rs.getString("CNS_CODCONC"));
@@ -226,10 +226,54 @@ public class DigitalizacionDao extends Conexion {
         return tramites;
 
     }
+    
+    public List<Tramite> buscaTramite(DigitalizacionForm digital) throws SQLException, ClassNotFoundException,
+                                                                            NamingException {
+        List<Tramite> tramites = new ArrayList<Tramite>();
+        
+       /* Tramite tramito = new Tramite();
+        tramito.setDsctipo("holas");
+        tramites.add(tramito);*/
+        
+        String res;
+        try {
+            open();
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.busca_tramite(?,?,? )}");
+            call.setString("PRM_TRAMITE", digital.getTramite()+"*"+digital.getTipodocumento());
+            call.setString("PRM_TABLA", Log.TABLA_GENERAL);
+            call.registerOutParameter("C_RESULTADO", OracleTypes.CURSOR);
+            call.execute();
+
+            rs = (ResultSet)call.getObject("C_RESULTADO");
+            if (rs != null)
+            while (rs.next()) {
+                Tramite tramite = new Tramite();
+                tramite.setCodcons(rs.getString("CNS_CODCONC"));
+                tramite.setAdutra(rs.getString("CNS_ADUTRA"));
+                tramite.setNrotra(rs.getString("CNS_NROTRA"));
+                tramite.setTipodoc(rs.getString("CNS_TIPODOC"));
+                tramite.setDsctipo(rs.getString("DSC_TIP"));
+                tramite.setEmisor(rs.getString("CNS_EMISOR"));
+                tramite.setPath(rs.getString("PATH"));
+                tramite.setNomarch(rs.getString("CNS_NOMARCH"));
+                tramite.setFecha_emi(rs.getString("CNS_FECHA_EMI"));
+                tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));                
+                tramite.setEstado(rs.getString("CNS_ESTADO"));
+                tramite.setUsuario(rs.getString(12));
+                tramite.setFechasys(rs.getString("CNS_FECHASYS"));
+                tramites.add(tramite);
+            }
+        }
+        finally {
+            close();
+        }
+        return tramites;
+
+    }
 
     public List<Tramite> consultaTramite(String digital) throws SQLException, ClassNotFoundException,
                                                                             NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE (?,?,? )}");
@@ -269,7 +313,7 @@ public class DigitalizacionDao extends Conexion {
 
     public List<Tramite> consultaTramite2(String digital) throws SQLException, ClassNotFoundException,
                                                                             NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.CONSULTA_POR_TRAMITE2 (?,?,? )}");
@@ -338,7 +382,7 @@ public class DigitalizacionDao extends Conexion {
     public List<List<Tramite>> consultaTramitenivel1rel(DigitalizacionForm digital) throws SQLException,
                                                                                            ClassNotFoundException,
                                                                                            NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         List<Tramite> tramitesnodo = null;
         List<Tramite> tramitesrel = null;
         List<Tramite> tramitesdoc = null;
@@ -425,7 +469,7 @@ public class DigitalizacionDao extends Conexion {
     public List<List<Tramite>> consultaTramitenivelnrel(DigitalizacionForm digital) throws SQLException,
                                                                                            ClassNotFoundException,
                                                                                            NamingException {
-        List<Tramite> tramites = null;
+        List<Tramite> tramites = new ArrayList<Tramite>();
         List<Tramite> tramitesnodo = null;
         List<Tramite> tramitesrel = null;
         List<Tramite> tramitesdoc = null;
@@ -481,7 +525,7 @@ public class DigitalizacionDao extends Conexion {
     public List<TipoDocumento> obtenerTipoDocumentos(String lstope, String nitemi) throws SQLException,
                                                                                           ClassNotFoundException,
                                                                                           NamingException {
-        List<TipoDocumento> tipodocumentos = null;
+        List<TipoDocumento> tipodocumentos = new ArrayList<TipoDocumento>();
         try {
             open();
             call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.OBTENER_TIPO_DOC (?,?,?)}");

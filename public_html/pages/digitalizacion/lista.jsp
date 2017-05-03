@@ -6,17 +6,7 @@
     <div class="panel-heading">
         <h3 class="panel-title">
             <i class="fa fa-table"></i> <strong>Lista de Documentos Digitalizados</strong>
-            <button tabindex="0" 
-                    class="info-help pull-right btn btn-link btn-sm" 
-                    role="button" 
-                    data-toggle="popover" 
-                    data-trigger="focus" 
-                    data-placement="left" 
-                    data-html="true" 
-                    title="" 
-                    data-content="">
-                Ayuda <i class="fa fa-info-circle"></i>
-            </button>    
+            
         </h3>
     </div>
     <div class="panel-body">

@@ -27,13 +27,12 @@ import org.apache.struts.actions.MappingDispatchAction;
 public class DigitalizacionAction extends MappingDispatchAction {
 
     private final DigitalizacionNeg neg = new DigitalizacionNeg();
-   
-    
+
 
     public ActionForward porfiltro(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                    HttpServletResponse response) throws Exception {
-        
-        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U","%");
+                                   HttpServletResponse response) throws Exception {
+
+        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U", "%");
         if (res.getCodigo() == 1) {
             request.setAttribute("tipos", res.getResultado());
         } else {
@@ -44,7 +43,7 @@ public class DigitalizacionAction extends MappingDispatchAction {
                 request.setAttribute("error", res.getMensaje());
             }
         }
-        
+
         Respuesta<List<Aduana>> adu = neg.obtenerAduanas();
         if (adu.getCodigo() == 1) {
             request.setAttribute("aduanas", adu.getResultado());
@@ -56,15 +55,15 @@ public class DigitalizacionAction extends MappingDispatchAction {
                 request.setAttribute("error", adu.getMensaje());
             }
         }
-        
+
 
         return mapping.findForward("consultafiltro");
     }
-    
+
     public ActionForward portramite(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                     HttpServletResponse response) throws Exception {
-        
-        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U","%");
+
+        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U", "%");
         if (res.getCodigo() == 1) {
             request.setAttribute("tipos", res.getResultado());
         } else {
@@ -75,15 +74,15 @@ public class DigitalizacionAction extends MappingDispatchAction {
                 request.setAttribute("error", res.getMensaje());
             }
         }
-        
+
         return mapping.findForward("consultatramite");
     }
-    
-    
+
+
     public ActionForward porrelacion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                    HttpServletResponse response) throws Exception {
-        
-        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U","%");
+                                     HttpServletResponse response) throws Exception {
+
+        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U", "%");
         if (res.getCodigo() == 1) {
             request.setAttribute("tipos", res.getResultado());
         } else {
@@ -94,14 +93,14 @@ public class DigitalizacionAction extends MappingDispatchAction {
                 request.setAttribute("error", res.getMensaje());
             }
         }
-        
+
         return mapping.findForward("consultarelacion");
     }
-    
+
     public ActionForward porgrafica(ActionMapping mapping, ActionForm form, HttpServletRequest request,
                                     HttpServletResponse response) throws Exception {
-        
-        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U","%");
+
+        Respuesta<List<TipoDocumento>> res = neg.obtenerTipoDocumento("U", "%");
         if (res.getCodigo() == 1) {
             request.setAttribute("tipos", res.getResultado());
         } else {
@@ -112,15 +111,14 @@ public class DigitalizacionAction extends MappingDispatchAction {
                 request.setAttribute("error", res.getMensaje());
             }
         }
-        
+
         return mapping.findForward("consultagrafica");
     }
-    
-   
-    
+
+
     public ActionForward filtroreporte(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
-                
+                                       HttpServletResponse response) throws Exception {
+
         DigitalizacionForm digital = new DigitalizacionForm();
         //digital.setCodconsignatario(request.getParameter("codconsignatario"));
         digital.setTipodocumento(request.getParameter("tipodocumento"));
@@ -131,33 +129,143 @@ public class DigitalizacionAction extends MappingDispatchAction {
         //digital.setTabla(request.getParameter("tabla"));
         digital.setTipofecha(request.getParameter("tipofecha"));
         digital.setCodconsignatario("%");
-        digital.setEmisor("%"); 
-                
+        digital.setEmisor("%");
+
         Respuesta<Tramite[]> res = null;
-        
-        
+
+
         res = neg.reporte(digital);
-     
+
         if (res.getCodigo() == 1) {
             request.setAttribute("tramites", res.getResultado());
             return mapping.findForward("reporte.lista");
         } else {
             if (res.getCodigo() == 0) {
-                Json.warning(response, res.getMensaje());   
+                Json.warning(response, res.getMensaje());
             } else {
-                Json.error(response, res.getMensaje());    
+                Json.error(response, res.getMensaje());
             }
         }
         return null;
     }
+
     public ActionForward tramitereporte(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
-                
+                                        HttpServletResponse response) throws Exception {
+
         DigitalizacionForm digital = new DigitalizacionForm();
-        
+
         digital.setTipodocumento(request.getParameter("tipodocumento"));
 
         if (digital.getTipodocumento().equals("960")) {
+            digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
+                               request.getParameter("duinumero"));
+        } else 
+        if (digital.getTipodocumento().equals("932")) {
+            digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
+                               request.getParameter("duinumero"));
+        } else
+        if (digital.getTipodocumento().equals("B74")) {
+            digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
+                               request.getParameter("duinumero"));
+        } else
+        if (digital.getTipodocumento().equals("785")) {
+            digital.setTramite(request.getParameter("duiaduana") + "" + request.getParameter("duigestion") + "" +
+                               request.getParameter("duinumero"));
+        } else
+            digital.setTramite(request.getParameter("tramite"));
+
+
+        //digital.setTabla(request.getParameter("tabla"));
+
+        Respuesta<Tramite[]> res = null;
+
+
+        res = neg.reportetramite(digital);
+
+        if (res.getCodigo() == 1) {
+            request.setAttribute("tramites", res.getResultado());
+            return mapping.findForward("reporte.lista");
+        } else {
+            if (res.getCodigo() == 0) {
+                Json.warning(response, res.getMensaje());
+            } else {
+                Json.error(response, res.getMensaje());
+            }
+        }
+        return null;
+    }
+
+
+    public ActionForward relacionreporte(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                         HttpServletResponse response) throws Exception {
+
+        DigitalizacionForm digital = new DigitalizacionForm();
+
+        digital.setTipodocumento(request.getParameter("tipodocumento"));
+        //digital.setNivel(request.getParameter("nivel"));
+
+        if (digital.getTipodocumento().equals("960")) {
+            digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
+                               request.getParameter("duinumero"));
+        } else
+
+        if (digital.getTipodocumento().equals("932")) {
+            digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
+                               request.getParameter("duinumero"));
+        } else
+
+        if (digital.getTipodocumento().equals("B74")) {
+            digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
+                               request.getParameter("duinumero"));
+        } else
+
+        if (digital.getTipodocumento().equals("785")) {
+            digital.setTramite(request.getParameter("duiaduana") + "" + request.getParameter("duigestion") + "" +
+                               request.getParameter("duinumero"));
+        } else
+            digital.setTramite(request.getParameter("tramite"));
+
+
+        //digital.setTabla(request.getParameter("tabla"));
+
+        Respuesta<Tramite[]> res = null;
+
+        //if(digital.getNivel().equals("1"))
+        res = neg.reportetramitenivel1(digital);
+        //else
+        //    res = neg.reportetramiteniveln(digital);
+
+        if (res.getCodigo() == 1) {
+            request.setAttribute("tramites", res.getResultado());
+            return mapping.findForward("reporte.lista");
+        } else {
+            if (res.getCodigo() == 0) {
+                Json.warning(response, res.getMensaje());
+            } else {
+                Json.error(response, res.getMensaje());
+            }
+        }
+        return null;
+    }
+
+    public ActionForward graficareporte(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+                                        HttpServletResponse response) throws Exception {
+
+        DigitalizacionForm digital = new DigitalizacionForm();
+
+        digital.setTipodocumento(request.getParameter("tipodocumento"));
+
+        if (digital.getTipodocumento().equals("960")) {
+            digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
+                               Util.completarCeros6(request.getParameter("duinumero")));
+        } else
+
+        if (digital.getTipodocumento().equals("932")) {
+            digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
+                               Util.completarCeros6(request.getParameter("duinumero")));
+        } else
+
+        if (digital.getTipodocumento().equals("B74")) {
             digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
                                Util.completarCeros6(request.getParameter("duinumero")));
         } else
@@ -170,177 +278,75 @@ public class DigitalizacionAction extends MappingDispatchAction {
 
 
         //digital.setTabla(request.getParameter("tabla"));
-                
+
         Respuesta<Tramite[]> res = null;
-        
-        
+
+
         res = neg.reportetramite(digital);
-     
+
         if (res.getCodigo() == 1) {
             request.setAttribute("tramites", res.getResultado());
             return mapping.findForward("reporte.lista");
         } else {
             if (res.getCodigo() == 0) {
-                Json.warning(response, res.getMensaje());   
+                Json.warning(response, res.getMensaje());
             } else {
-                Json.error(response, res.getMensaje());    
+                Json.error(response, res.getMensaje());
             }
         }
         return null;
     }
-    
-    
-    public ActionForward relacionreporte(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
-                
-        DigitalizacionForm digital = new DigitalizacionForm();
-        
-        digital.setTipodocumento(request.getParameter("tipodocumento"));
-        //digital.setNivel(request.getParameter("nivel"));
-
-        if (digital.getTipodocumento().equals("960")) {
-            digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                               Util.completarCeros6(request.getParameter("duinumero")));
-        } else
-            
-            if (digital.getTipodocumento().equals("932")) {
-                digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                                   Util.completarCeros6(request.getParameter("duinumero")));
-            } else
-    
-                if (digital.getTipodocumento().equals("B74")) {
-                   digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                                      Util.completarCeros6(request.getParameter("duinumero")));
-                } else
-        
-                    if (digital.getTipodocumento().equals("785")) {
-                        digital.setTramite(request.getParameter("duiaduana") + " " + request.getParameter("duigestion") + " " +
-                                           Util.completarCeros7(request.getParameter("duinumero")));
-                    } else
-                        digital.setTramite(request.getParameter("tramite"));
 
 
-        //digital.setTabla(request.getParameter("tabla"));
-                
-        Respuesta<Tramite[]> res = null;
-        
-        //if(digital.getNivel().equals("1"))
-            res = neg.reportetramitenivel1(digital);
-        //else
-        //    res = neg.reportetramiteniveln(digital);
-     
-        if (res.getCodigo() == 1) {
-            request.setAttribute("tramites", res.getResultado());
-            return mapping.findForward("reporte.lista");
-        } else {
-            if (res.getCodigo() == 0) {
-                Json.warning(response, res.getMensaje());   
-            } else {
-                Json.error(response, res.getMensaje());    
-            }
-        }
-        return null;
-    }
-    
-    public ActionForward graficareporte(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
-                
-        DigitalizacionForm digital = new DigitalizacionForm();
-        
-        digital.setTipodocumento(request.getParameter("tipodocumento"));
-
-        if (digital.getTipodocumento().equals("960")) {
-            digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                               Util.completarCeros6(request.getParameter("duinumero")));
-        } else
-        
-            if (digital.getTipodocumento().equals("932")) {
-                digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                                   Util.completarCeros6(request.getParameter("duinumero")));
-            } else
-
-                if (digital.getTipodocumento().equals("B74")) {
-                   digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                                      Util.completarCeros6(request.getParameter("duinumero")));
-                } else
-    
-                    if (digital.getTipodocumento().equals("785")) {
-                        digital.setTramite(request.getParameter("duiaduana") + " " + request.getParameter("duigestion") + " " +
-                                           Util.completarCeros7(request.getParameter("duinumero")));
-                    } else
-                        digital.setTramite(request.getParameter("tramite"));
-
-
-        //digital.setTabla(request.getParameter("tabla"));
-                
-        Respuesta<Tramite[]> res = null;
-        
-        
-        res = neg.reportetramite(digital);
-     
-        if (res.getCodigo() == 1) {
-            request.setAttribute("tramites", res.getResultado());
-            return mapping.findForward("reporte.lista");
-        } else {
-            if (res.getCodigo() == 0) {
-                Json.warning(response, res.getMensaje());   
-            } else {
-                Json.error(response, res.getMensaje());    
-            }
-        }
-        return null;
-    }
-    
-    
     public ActionForward tramitereportenivel1(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
-                
+                                              HttpServletResponse response) throws Exception {
+
         DigitalizacionForm digital = new DigitalizacionForm();
         digital.setTramite(request.getParameter("tramite"));
-        //digital.setTabla(request.getParameter("tabla"));                
-                
+        //digital.setTabla(request.getParameter("tabla"));
+
         Respuesta<Tramite[]> res = null;
-        
-        
+
+
         res = neg.reportetramitenivel1(digital);
-     
+
         if (res.getCodigo() == 1) {
             request.setAttribute("tramites", res.getResultado());
             return mapping.findForward("reporte.lista");
         } else {
             if (res.getCodigo() == 0) {
-                Json.warning(response, res.getMensaje());   
+                Json.warning(response, res.getMensaje());
             } else {
-                Json.error(response, res.getMensaje());    
+                Json.error(response, res.getMensaje());
             }
         }
         return null;
     }
-    
+
     public ActionForward tramitereporteniveln(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-                                 HttpServletResponse response) throws Exception {
-                
+                                              HttpServletResponse response) throws Exception {
+
         DigitalizacionForm digital = new DigitalizacionForm();
         digital.setTramite(request.getParameter("tramite"));
-        //digital.setTabla(request.getParameter("tabla"));                
-                
+        //digital.setTabla(request.getParameter("tabla"));
+
         Respuesta<Tramite[]> res = null;
-        
-        
+
+
         res = neg.reportetramiteniveln(digital);
-     
+
         if (res.getCodigo() == 1) {
             request.setAttribute("tramites", res.getResultado());
             return mapping.findForward("reporte.lista");
         } else {
             if (res.getCodigo() == 0) {
-                Json.warning(response, res.getMensaje());   
+                Json.warning(response, res.getMensaje());
             } else {
-                Json.error(response, res.getMensaje());    
+                Json.error(response, res.getMensaje());
             }
         }
         return null;
     }
-    
+
 
 }
