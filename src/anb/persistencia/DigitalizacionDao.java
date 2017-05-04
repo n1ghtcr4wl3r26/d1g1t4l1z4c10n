@@ -270,6 +270,51 @@ public class DigitalizacionDao extends Conexion {
         return tramites;
 
     }
+    
+    public List<Tramite> buscaTramite2(String tram) throws SQLException, ClassNotFoundException,
+                                                                            NamingException {
+        List<Tramite> tramites = new ArrayList<Tramite>();
+        
+       /* Tramite tramito = new Tramite();
+        tramito.setDsctipo("holas");
+        tramites.add(tramito);*/
+        
+        String res;
+        try {
+            open();
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.busca_tramite(?,?,? )}");
+            call.setString("PRM_TRAMITE", tram);
+            call.setString("PRM_TABLA", Log.TABLA_GENERAL);
+            call.registerOutParameter("C_RESULTADO", OracleTypes.CURSOR);
+            call.execute();
+
+            rs = (ResultSet)call.getObject("C_RESULTADO");
+            if (rs != null)
+            while (rs.next()) {
+                Tramite tramite = new Tramite();
+                tramite.setCodcons(rs.getString("CNS_CODCONC"));
+                tramite.setAdutra(rs.getString("CNS_ADUTRA"));
+                tramite.setNrotra(rs.getString("CNS_NROTRA"));
+                tramite.setTipodoc(rs.getString("CNS_TIPODOC"));
+                tramite.setDsctipo(rs.getString("DSC_TIP"));
+                tramite.setEmisor(rs.getString("CNS_EMISOR"));
+                tramite.setPath(rs.getString("PATH"));
+                tramite.setNomarch(rs.getString("CNS_NOMARCH"));
+                tramite.setFecha_emi(rs.getString("CNS_FECHA_EMI"));
+                tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));                
+                tramite.setEstado(rs.getString("CNS_ESTADO"));
+                tramite.setUsuario(rs.getString(12));
+                tramite.setFechasys(rs.getString("CNS_FECHASYS"));
+                tramites.add(tramite);
+            }
+        }
+        finally {
+            close();
+        }
+        return tramites;
+
+    }
+
 
     public List<Tramite> consultaTramite(String digital) throws SQLException, ClassNotFoundException,
                                                                             NamingException {

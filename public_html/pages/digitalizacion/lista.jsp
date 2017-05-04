@@ -10,6 +10,7 @@
         </h3>
     </div>
     <div class="panel-body">
+        <div class="table-responsive">
         <table class="table table-striped table-hover" id="main-table">
             <thead>
                 <tr>
@@ -44,6 +45,7 @@
                 </c:forEach>
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 <div id='imagen'>

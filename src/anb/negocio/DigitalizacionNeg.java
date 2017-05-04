@@ -205,7 +205,7 @@ public class DigitalizacionNeg {
     public Respuesta<Tramite[]> reportetramitenivel1(DigitalizacionForm digital) {
         Respuesta<Tramite[]> respuesta = new Respuesta<Tramite[]>();
         DigitalizacionForm dig = new DigitalizacionForm();
-        
+       
         List<Tramite> tramites = null;
         respuesta.setCodigo(-1);
         
@@ -225,6 +225,10 @@ public class DigitalizacionNeg {
                     if (tramites.size() > 0)
                         result.addAll(tramites);
                     else{
+                        tramites = dao.buscaTramite2(tram);
+                        if (tramites.size() > 0)
+                            result.addAll(tramites);
+                        else{
                         Tramite tramvacio = new Tramite();
                         tramvacio.setNrotra(tram);
                         tramvacio.setAdutra("-");
@@ -237,6 +241,7 @@ public class DigitalizacionNeg {
                         tramvacio.setPath("");
                         tramvacio.setTipodoc("-");
                         result.add(tramvacio);
+                        }
                     }
                 }
                 if (result == null || result.size() == 0) {
