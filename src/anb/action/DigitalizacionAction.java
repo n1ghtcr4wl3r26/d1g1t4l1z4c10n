@@ -158,19 +158,19 @@ public class DigitalizacionAction extends MappingDispatchAction {
 
         if (digital.getTipodocumento().equals("960")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else 
         if (digital.getTipodocumento().equals("932")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
         if (digital.getTipodocumento().equals("B74")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
         if (digital.getTipodocumento().equals("785")) {
             digital.setTramite(request.getParameter("duiaduana") + "" + request.getParameter("duigestion") + "" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros8(request.getParameter("duinumero")));
         } else
             digital.setTramite(request.getParameter("tramite"));
 
@@ -206,22 +206,22 @@ public class DigitalizacionAction extends MappingDispatchAction {
 
         if (digital.getTipodocumento().equals("960")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
 
         if (digital.getTipodocumento().equals("932")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
 
         if (digital.getTipodocumento().equals("B74")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
 
         if (digital.getTipodocumento().equals("785")) {
             digital.setTramite(request.getParameter("duiaduana") + "" + request.getParameter("duigestion") + "" +
-                               request.getParameter("duinumero"));
+                               Util.completarCeros8(request.getParameter("duinumero")));
         } else
             digital.setTramite(request.getParameter("tramite"));
 
@@ -257,22 +257,22 @@ public class DigitalizacionAction extends MappingDispatchAction {
 
         if (digital.getTipodocumento().equals("960")) {
             digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                               Util.completarCeros6(request.getParameter("duinumero")));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
 
         if (digital.getTipodocumento().equals("932")) {
             digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                               Util.completarCeros6(request.getParameter("duinumero")));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
 
         if (digital.getTipodocumento().equals("B74")) {
             digital.setTramite(request.getParameter("duigestion") + " " + request.getParameter("duiaduana") + " C " +
-                               Util.completarCeros6(request.getParameter("duinumero")));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
 
         if (digital.getTipodocumento().equals("785")) {
             digital.setTramite(request.getParameter("duiaduana") + " " + request.getParameter("duigestion") + " " +
-                               Util.completarCeros7(request.getParameter("duinumero")));
+                               Util.completarCeros8(request.getParameter("duinumero")));
         } else
             digital.setTramite(request.getParameter("tramite"));
 

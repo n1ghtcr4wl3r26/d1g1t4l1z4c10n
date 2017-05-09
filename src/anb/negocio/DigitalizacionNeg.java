@@ -176,7 +176,7 @@ public class DigitalizacionNeg {
         respuesta.setCodigo(-1);
         if (estaConectadoBd()) {
             try {
-                List<Tramite> result = dao.buscaTramite(digital);
+                List<Tramite> result = dao.consultaTramite(digital);
                 if (result == null || result.size() == 0) {
                     respuesta.setMensaje("No existen registros");
                     respuesta.setCodigo(0);
@@ -224,11 +224,7 @@ public class DigitalizacionNeg {
                     tramites = dao.consultaTramite2(tram);
                     if (tramites.size() > 0)
                         result.addAll(tramites);
-                    else{
-                        tramites = dao.buscaTramite2(tram);
-                        if (tramites.size() > 0)
-                            result.addAll(tramites);
-                        else{
+                    else{                        
                         Tramite tramvacio = new Tramite();
                         tramvacio.setNrotra(tram);
                         tramvacio.setAdutra("-");
@@ -241,7 +237,6 @@ public class DigitalizacionNeg {
                         tramvacio.setPath("");
                         tramvacio.setTipodoc("-");
                         result.add(tramvacio);
-                        }
                     }
                 }
                 if (result == null || result.size() == 0) {

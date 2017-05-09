@@ -73,6 +73,8 @@ public class Util {
         return res;
     }
     
+    
+    
     public static String completarCeros7(String numero) {
         String res = "";
         if(numero.length() == 7)
