@@ -170,7 +170,7 @@ public class DigitalizacionAction extends MappingDispatchAction {
         } else
         if (digital.getTipodocumento().equals("785")) {
             digital.setTramite(request.getParameter("duiaduana") + "" + request.getParameter("duigestion") + "" +
-                               Util.completarCeros8(request.getParameter("duinumero")));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
             digital.setTramite(request.getParameter("tramite"));
 
@@ -221,7 +221,7 @@ public class DigitalizacionAction extends MappingDispatchAction {
 
         if (digital.getTipodocumento().equals("785")) {
             digital.setTramite(request.getParameter("duiaduana") + "" + request.getParameter("duigestion") + "" +
-                               Util.completarCeros8(request.getParameter("duinumero")));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
             digital.setTramite(request.getParameter("tramite"));
 
@@ -272,7 +272,7 @@ public class DigitalizacionAction extends MappingDispatchAction {
 
         if (digital.getTipodocumento().equals("785")) {
             digital.setTramite(request.getParameter("duiaduana") + " " + request.getParameter("duigestion") + " " +
-                               Util.completarCeros8(request.getParameter("duinumero")));
+                               Util.completarCeros7(request.getParameter("duinumero")));
         } else
             digital.setTramite(request.getParameter("tramite"));
 
