@@ -22,7 +22,6 @@
             <forward name="consultafiltro" path="/consultafiltro.do" redirect="true" />
             <forward name="consultatramite" path="/consultatramite.do" redirect="true" />
             <forward name="consultarelacion" path="/consultarelacion.do" redirect="true" />
-            <forward name="consultagrafica" path="/consultagrafica.do" redirect="true" />
         </action>
         
         <action path="/logout" type="anb.general.LogoutAction" scope="request">
@@ -65,13 +64,6 @@
         <action path="/relacionReporte" type="anb.action.DigitalizacionAction" parameter="relacionreporte" scope="request">
             <forward name="reporte.lista" path="/pages/digitalizacion/lista.jsp"/>
         </action>
-        
-        <action path="/consultagrafica" type="anb.action.DigitalizacionAction" name="DigitalizacionForm" parameter="porgrafica" scope="request">
-            <forward name="consultagrafico" path="digitalizacion.consulta.grafica"/>
-        </action>
-        <action path="/relaciongrafica" type="anb.action.DigitalizacionAction" parameter="relaciongrafica" scope="request">
-            <forward name="reporte.grafica" path="/pages/digitalizacion/grafica.jsp"/>
-        </action> 
         
     </action-mappings>
     <controller nocache="true" processorClass="anb.general.AnbRequestProcessor" />

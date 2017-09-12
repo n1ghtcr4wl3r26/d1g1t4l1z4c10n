@@ -14,7 +14,7 @@
         <table class="table table-striped table-hover" id="main-table">
             <thead>
                 <tr>
-                    <th>N&uacute;mero de Tr&aacute;mite</th>
+                    <th style="width:100px">N&uacute;mero de Tr&aacute;mite</th>
                     <th>C&oacute;digo Concesionario</th>
                     <th>Aduana</th>                    
                     <th>Tipo de Documento</th>
