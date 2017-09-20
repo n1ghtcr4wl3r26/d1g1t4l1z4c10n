@@ -32,6 +32,37 @@ public class DigitalizacionNeg {
 
     // LLAMADA A FUNCIONES PARAMETRICAS
 
+    public Respuesta<Tramite[]> relaciones(DigitalizacionForm digital) {
+        Respuesta<Tramite[]> respuesta = new Respuesta<Tramite[]>();
+        respuesta.setCodigo(-1);
+        if (estaConectadoBd()) {
+            try {
+                List<Tramite> result = dao.relaciones(digital);
+                if (result == null || result.size() == 0) {
+                    respuesta.setMensaje("No existen registros");
+                    respuesta.setCodigo(0);
+                } else {
+                    respuesta.setCodigo(1);
+                    respuesta.setMensaje("OK");
+                    respuesta.setResultado(result.toArray(new Tramite[result.size()]));
+                }
+            } catch (SQLException e) {
+                respuesta.setMensaje("Error no identificado -  " + e.getMessage());
+                Log.error("Error no identificado", "BASE DE DATOS", e);
+            } catch (ClassNotFoundException e) {
+                respuesta.setMensaje("Error no identificado -  " + e.getMessage());
+                Log.error("Error no identificado", "BASE DE DATOS", e);
+            } catch (NamingException e) {
+                respuesta.setMensaje("Error no identificado -  " + e.getMessage());
+                Log.error("Error no identificado", "BASE DE DATOS", e);
+            }
+        } else {
+            respuesta.setMensaje("Error. No se puede conectar a la base de datos.");
+        }
+
+        return respuesta;
+    }
+
     public Respuesta<List<Aduana>> obtenerAduanas() {
         Respuesta<List<Aduana>> respuesta = new Respuesta<List<Aduana>>();
         respuesta.setCodigo(-1);

@@ -24,7 +24,7 @@
                     <th>Fecha de Proceso</th>
                     <th>Estado</th>
                     <th>Usuario</th>
-                    <th>Fecha Sistema</th>
+                    <%--<th>Fecha Sistema</th>--%>
                 </tr>
             </thead>
             <tbody>
@@ -35,12 +35,21 @@
                     <td>${tramite.adutra}</td>                    
                     <td>${tramite.dsctipo}</td>
                     <td>${tramite.emisor}</td>
-                    <td><a href='${tramite.path}' target="_blank">${tramite.nomarch}</a></td>                   
+                    <td>
+                    <c:choose>
+                        <c:when test="${tramite.nomarch=='NO DIGITALIZADO'}">
+                            ${tramite.nomarch}
+                        </c:when>    
+                        <c:otherwise>
+                            <a href='${tramite.path}' target="_blank">${tramite.nomarch}</a>
+                        </c:otherwise>
+                    </c:choose>
+                    </td>                   
                     <td>${tramite.fecha_emi}</td>
                     <td>${tramite.fecha_pro}</td>
                     <td>${tramite.estado}</td>
                     <td>${tramite.usuario}</td>
-                    <td>${tramite.fechasys}</td>   
+                    <%--<td>${tramite.fechasys}</td>--%>  
                 </tr>
                 </c:forEach>
             </tbody>

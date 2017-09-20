@@ -26,6 +26,45 @@ public class DigitalizacionDao extends Conexion {
         super();
     }
 
+    public List<Tramite> relaciones(DigitalizacionForm digital) throws SQLException,
+                                                                                      ClassNotFoundException,
+                                                                                      NamingException {
+        List<Tramite> tramites = new ArrayList<Tramite>();
+        try {
+            open();
+            call = cn.prepareCall("{ call digital.PKG_DIGITALIZACION.relaciones (?,?,?)}");
+            call.setString("PRM_TRAMITE", digital.getTramite());
+            call.setString("PRM_TIPODOCUMENTO", digital.getTipodocumento());
+            call.registerOutParameter("C_RESULTADO", OracleTypes.CURSOR);
+            call.execute();
+
+            rs = (ResultSet)call.getObject("C_RESULTADO");
+            if (rs != null)
+                tramites = new ArrayList<Tramite>();
+            while (rs.next()) {
+                Tramite tramite = new Tramite();
+                tramite.setCodcons(rs.getString("CNS_CODCONC"));
+                tramite.setAdutra(rs.getString("CNS_ADUTRA"));
+                tramite.setNrotra(rs.getString("CNS_NROTRA"));
+                tramite.setTipodoc(rs.getString("CNS_TIPODOC"));
+                tramite.setDsctipo(rs.getString("DSC_TIP"));
+                tramite.setEmisor(rs.getString("CNS_EMISOR"));
+                tramite.setPath(rs.getString("PATH"));
+                tramite.setNomarch(rs.getString("CNS_NOMARCH"));
+                tramite.setFecha_emi(rs.getString("CNS_FECHA_EMI"));
+                tramite.setFecha_pro(rs.getString("CNS_FECHA_PRO"));
+                tramite.setEstado(rs.getString("CNS_ESTADO"));
+                tramite.setUsuario(rs.getString(12));
+                tramite.setFechasys(rs.getString("CNS_FECHASYS"));
+                tramites.add(tramite);
+            }
+        } finally {
+            //if (!esTransaccional())
+            close();
+        }
+        return tramites;
+
+    }
 
     public List<Aduana> obtenerAduanas() throws SQLException, ClassNotFoundException, NamingException {
         List<Aduana> aduanas = new ArrayList<Aduana>();

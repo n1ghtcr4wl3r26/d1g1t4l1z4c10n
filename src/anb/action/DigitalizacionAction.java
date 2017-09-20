@@ -140,16 +140,13 @@ public class DigitalizacionAction extends MappingDispatchAction {
         if (digital.getTipodocumento().equals("960")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
                                Util.completarCeros7(request.getParameter("duinumero")));
-        } else 
-        if (digital.getTipodocumento().equals("932")) {
+        } else if (digital.getTipodocumento().equals("932")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
                                Util.completarCeros7(request.getParameter("duinumero")));
-        } else
-        if (digital.getTipodocumento().equals("B74")) {
+        } else if (digital.getTipodocumento().equals("B74")) {
             digital.setTramite(request.getParameter("duigestion") + "" + request.getParameter("duiaduana") + "C" +
                                Util.completarCeros7(request.getParameter("duinumero")));
-        } else
-        if (digital.getTipodocumento().equals("785")) {
+        } else if (digital.getTipodocumento().equals("785")) {
             digital.setTramite(request.getParameter("duiaduana") + "" + request.getParameter("duigestion") + "" +
                                Util.completarCeros7(request.getParameter("duinumero")));
         } else
@@ -207,14 +204,8 @@ public class DigitalizacionAction extends MappingDispatchAction {
             digital.setTramite(request.getParameter("tramite"));
 
 
-        //digital.setTabla(request.getParameter("tabla"));
-
         Respuesta<Tramite[]> res = null;
-
-        //if(digital.getNivel().equals("1"))
-        res = neg.reportetramitenivel1(digital);
-        //else
-        //    res = neg.reportetramiteniveln(digital);
+        res = neg.relaciones(digital);
 
         if (res.getCodigo() == 1) {
             request.setAttribute("tramites", res.getResultado());
